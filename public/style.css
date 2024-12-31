@@ -1,0 +1,161 @@
+/* body{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    background-color: gray;
+    margin: 1px;
+    font-family: Arial, Helvetica, sans-serif;
+}
+#canvas{
+    border: 2px solid #333;
+    background-color: white;
+    margin-top: 20px;
+}
+.a{
+    font-family: Arial, Helvetica, sans-serif;
+    display: flex;
+    width: 50%;
+    justify-content: space-between;
+    align-items: center;
+}
+.b{
+    font-family: Arial, Helvetica, sans-serif;
+    display: flex;
+    justify-content: center;
+}
+.c{
+    margin-left: 1%;
+}
+
+.d{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+#p{
+    margin-right: 8px;
+    font-family: Arial, Helvetica, sans-serif;
+
+}
+#eraserToggle{
+    height: 5vh;
+    background: #69a8eb;
+}
+
+#eraserToggle{
+    font-weight: 200;
+    font-size: medium;
+    font-style: oblique;
+    border-radius: 8px;
+    
+} */
+
+/* General Styles */
+body {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    background-color: gray;
+    margin: 0;
+    box-sizing: border-box;
+    font-family: Arial, Helvetica, sans-serif;
+    color: #333;
+}
+
+h1 {
+    margin: 20px 0;
+    font-size: 2rem;
+    color: #444;
+}
+
+#a {
+    font-family: Arial, Helvetica, sans-serif;
+}
+
+/* Toolbar Section */
+.a {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    width: 60%;
+    margin: 10px 0;
+    gap: 10px;
+}
+
+.b,
+.d {
+    display: flex;
+    align-items: center;
+    /* gap: 10px; */
+}
+
+.c {
+    margin-left: 5px;
+    cursor: pointer;
+}
+
+#p {
+    margin: 0;
+    font-size: 1rem;
+    color: #444;
+}
+
+#eraserToggle {
+    height: 40px;
+    width: 100px;
+    background-color: #69a8eb;
+    color: white;
+    font-weight: bold;
+    font-size: 1rem;
+    border: none;
+    border-radius: 8px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+}
+
+#eraserToggle:hover {
+    background-color: #4f8edb;
+}
+
+/* Canvas */
+#canvas {
+    border: 2px solid #333;
+    background-color: white;
+    margin-top: 20px;
+    box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.1);
+    max-width: 90%;
+}
+
+/* Media Query for Mobile Devices */
+@media screen and (max-width: 768px) {
+    h1 {
+        font-size: 1.5rem;
+    }
+
+    .a {
+        flex-direction: column;
+        width: 90%;
+        align-items: stretch;
+        gap: 15px;
+    }
+
+    .b,
+    .d {
+        justify-content: space-between;
+    }
+
+    #eraserToggle {
+        width: 100%;
+        height: 50px;
+        font-size: 1rem;
+    }
+
+    #p {
+        font-size: 0.9rem;
+    }
+
+    #canvas {
+        height: 50vh;
+        max-width: 95%;
+    }
+}

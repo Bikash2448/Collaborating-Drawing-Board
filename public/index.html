@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Collaborating Drawing Board</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <h1>Collaborating Drawing Board</h1>
+    <div class="a">
+        <div class="b">
+            <label for="colorPicker">Select Pen Color:  </label>
+            <input class="c" type="color" id="colorPicker" value="#000000">
+        </div>
+        <div class="d">
+            <h4 id="p">Select Eraser : </h4>
+            <button id="eraserToggle">Eraser</button>
+        </div>
+        
+    </div>
+    <canvas id="canvas" width="800" height="600"></canvas>
+    <script src="/socket.io/socket.io.js"></script>
+    <script src="script.js"></script>
+    
+</body>
+</html>
