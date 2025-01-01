@@ -2,6 +2,7 @@ const express = require('express')
 const http = require('http')
 const {Server} = require('socket.io')
 const cors = require('cors');
+require('dotenv').config(); 
 
 
 const app = express();
@@ -12,6 +13,8 @@ app.use(cors({
     origin: '*', // Allow all origins
     methods: ['GET', 'POST'], // Allow specific HTTP methods
 }));
+
+const port = process.env.PORT || 3000;
 
 
 // serve the static files from the "public" folder
@@ -33,6 +36,6 @@ io.on('connection', (socket)=>{
     })
 })
 
-server.listen(3000,()=>{
-    console.log('server is running on port 3000')
+server.listen(port,()=>{
+    console.log(`server is running on port ${port}`)
 })
