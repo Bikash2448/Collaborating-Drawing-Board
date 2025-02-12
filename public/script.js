@@ -13,6 +13,18 @@ const socket = io();
 let currentColor = colorPicker.value;
 let isEraserActive = false;
 
+// Function to get touch position on the canvas for mobile
+function getTouchPosition(event) {
+    const rect = canvas.getBoundingClientRect();
+    const touch = event.touches[0] || event.changedTouches[0];
+
+    return {
+        x: (touch.clientX - rect.left) * (canvas.width / rect.width),
+        y: (touch.clientY - rect.top) * (canvas.height / rect.height),
+    };
+}
+
+
 function getMousePosition(event) {
     const rect = canvas.getBoundingClientRect();
     const scaleX = canvas.width / rect.width; // Scaling factor for width
@@ -24,6 +36,7 @@ function getMousePosition(event) {
 }
 
 colorPicker.addEventListener('input', (e) => {
+    console.log("input event start")
     currentColor = e.target.value;
     console.log("update color",currentColor)
 
@@ -40,6 +53,15 @@ eraserToggle.addEventListener('click', () => {
     }
 })
 
+// Touch Events for Mobile
+canvas.addEventListener('touchstart', (e) => {
+    e.preventDefault(); // Prevents page from scrolling while drawing
+    drawing = true;
+    ctx.beginPath();
+    const { x, y } = getTouchPosition(e);
+    socket.emit("ondown", { x, y });
+});
+
 
 
 canvas.addEventListener('mousedown',(e)=>{
@@ -50,7 +72,39 @@ canvas.addEventListener('mousedown',(e)=>{
     
     socket.emit("ondown",{x,y})
 })
+
+
+
+canvas.addEventListener('touchmove', (e) => {
+    e.preventDefault(); // Prevents unwanted scrolling
+    if (!drawing) return;
+
+    const { x, y } = getTouchPosition(e);
+
+    ctx.lineWidth = isEraserActive ? 15 : 5;
+    ctx.lineCap = isEraserActive ? 'square' : 'round';
+    ctx.strokeStyle = isEraserActive ? '#FFFFFF' : currentColor;
+
+    ctx.lineTo(x, y);
+    ctx.stroke();
+    ctx.beginPath();
+    ctx.moveTo(x, y);
+
+    socket.emit('drawing', { x, y, color: ctx.strokeStyle, width: ctx.lineWidth });
+});
+
+canvas.addEventListener('touchend', () => {
+    drawing = false;
+    ctx.closePath();
+});
+
+
+
+
+
+
 canvas.addEventListener('mousemove', (e) => {
+    console.log("Mouse move envent start")
     if (!drawing) return true;
     const { x, y } = getMousePosition(e);
 
@@ -71,22 +125,26 @@ canvas.addEventListener('mousemove', (e) => {
     ctx.moveTo(x,y)
 
     socket.emit('drawing',{x,y, color:ctx.strokeStyle, width:ctx.lineWidth})
+    console.log("when drawing strt")
     
 
 })
 
 canvas.addEventListener('mouseup',()=>{
+    console.log('mouse up event start')
     drawing=false;
     ctx.closePath();
     
 })
 
 socket.on('down',(data)=>{
+    console.log("mousedown event start")
     const {x,y}=data;
     ctx.moveTo(x,y)
 })
 
 socket.on('drawing',(data)=>{
+    console.log("drawing event start")
     const {x,y,color,width}=data;
     ctx.lineWidth = width;
     ctx.lineCap = 'round';
